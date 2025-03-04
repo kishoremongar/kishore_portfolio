@@ -149,7 +149,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
           const getAttr = (
             distance: number,
             minVal: number,
-            maxVal: number
+            maxVal: number,
           ) => {
             const val = maxVal - Math.abs((maxVal * distance) / maxDist);
             return Math.max(minVal, val + minVal);
@@ -215,7 +215,9 @@ const TextPressure: React.FC<TextPressureProps> = ({
         {chars.map((char, i) => (
           <span
             key={i}
-            ref={(el) => (spansRef.current[i] = el)}
+            ref={(el: HTMLSpanElement | null) => {
+              spansRef.current[i] = el;
+            }}
             data-char={char}
             className='inline-block'
           >
