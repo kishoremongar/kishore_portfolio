@@ -1,6 +1,5 @@
 'use client';
 
-import { CodeBracketIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
@@ -13,6 +12,7 @@ import TextPressure from '@/components/Home/HeroText';
 export default function MainLandingHero() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+  const resumeLink = `https://drive.google.com/uc?export=download&id=${process.env.NEXT_PUBLIC_RESUME_FILE_ID}`;
 
   useEffect(() => {
     setMounted(true);
@@ -20,7 +20,7 @@ export default function MainLandingHero() {
 
   if (!mounted) return null;
   return (
-    <section className='relative min-h-screen flex flex-col items-center justify-center pt-24 md:pt-14'>
+    <section className='relative min-h-screen flex flex-col items-center justify-center pt-20 md:pt-14'>
       {theme === 'dark' && (
         <>
           <div className='absolute inset-0'>
@@ -37,25 +37,49 @@ export default function MainLandingHero() {
       )}
       <div className='relative z-10 w-full max-w-7xl sm:w-[85%] md:w-[70%] mx-auto'>
         <div className='grid grid-cols-1 md:pr-8 place-items-center md:grid-cols-3 gap-8 md:gap-4 items-center'>
-          <div className='col-span-2 relative z-10 flex items-center flex-col justify-center space-y-6 mt-16 md:mt-0'>
-            <TextPressure
-              text='Hello!!!'
-              className='tracking-[0.2em] w-full !text-primary dark:!text-white'
-              width
-              weight
-              italic
-              flex
-              scale
-              minFontSize={120}
-            />
-            <p className=' text-primary dark:text-white text-xl w-[300px] md:w-[550px] translate-y-4 opacity-0 animate-fadeSlideUp [animation-fill-mode:forwards] [animation-delay:0.8s]'>
+          <div className='col-span-2 relative z-10 flex items-center flex-col justify-center gap-y-10 md:gap-y-6'>
+            <div className='flex w-[300px] md:w-[550px]'>
+              <TextPressure
+                text='Hello!!!'
+                className='tracking-[0.2em] w-full !text-primary dark:!text-white'
+                width
+                weight
+                italic
+                flex
+                scale
+                minFontSize={120}
+              />
+            </div>
+            <p className='mt-8 md:mt-0 text-primary dark:text-white text-xl w-[300px] md:w-[550px] translate-y-4 opacity-0 animate-fadeSlideUp [animation-fill-mode:forwards] [animation-delay:0.8s]'>
               {`I am passionate about creating seamless web experiences with modern
                 technologies. My unwavering commitment to
                 staying at the forefront of the industry is fueled by a goal
                 for continuous learning and professional development.`}
             </p>
+            <Link
+              href={resumeLink}
+              download
+              className='w-36 self-start border rounded-3xl bg-transparent dark:text-white text-primary hover:text-white hover:bg-primary dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10 px-4 py-2 text-lg font-medium transition-colors duration-300 flex items-center justify-center gap-2'
+            >
+              Resume
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='transform'
+              >
+                <line x1='7' y1='17' x2='17' y2='7' />
+                <polyline points='7 7 17 7 17 17' />
+              </svg>
+            </Link>
           </div>
-          <CustomCard className='relative z-10 w-[80%]'>
+          <CustomCard className='relative z-10 w-[80%] shadow-xl'>
             <div className='space-y-4 text-left text-primary dark:text-white'>
               <div className='relative group w-full aspect-square'>
                 <Image
@@ -71,20 +95,43 @@ export default function MainLandingHero() {
               <p className='text-lg text-gray-400'>Front-end Developer</p>
               <div className='flex gap-4 items-center'>
                 <Link
-                  href='https://github.com/kishoremongar'
-                  target='_blank'
-                  className='text-blue-500 hover:text-blue-400 flex items-center gap-2'
-                >
-                  <CodeBracketIcon className='h-5 w-5' />
-                  GitHub
-                </Link>
-                <Link
                   href='https://www.linkedin.com/in/kishore-mongar'
                   target='_blank'
                   className='text-blue-500 hover:text-blue-400 flex items-center gap-2'
+                  title='LinkedIn'
                 >
-                  <UserCircleIcon className='h-5 w-5' />
-                  LinkedIn
+                  <Image
+                    src='/icons/linkedin.svg'
+                    alt='Github Icon'
+                    width={24}
+                    height={24}
+                  />
+                </Link>
+                <Link
+                  href='https://github.com/kishoremongar'
+                  target='_blank'
+                  className='text-blue-500 hover:text-blue-400 flex items-center gap-2'
+                  title='GitHub'
+                >
+                  <Image
+                    src='/icons/github.svg'
+                    alt='Github Icon'
+                    width={24}
+                    height={24}
+                  />
+                </Link>
+                <Link
+                  href='https://kishoremongar.hashnode.dev'
+                  target='_blank'
+                  className='text-blue-500 hover:text-blue-400 flex items-center gap-2'
+                  title='Hashnode'
+                >
+                  <Image
+                    src='/icons/hashnode.svg'
+                    alt='Github Icon'
+                    width={24}
+                    height={24}
+                  />
                 </Link>
               </div>
             </div>

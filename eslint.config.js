@@ -26,6 +26,8 @@ export default [
       '**/node_modules/**',
       '**/dist/**',
       '**/.git/**',
+      '.next/**',
+      '**/.next',
       '**/.next/**',
       '**/out/**',
       'next.config.mjs',

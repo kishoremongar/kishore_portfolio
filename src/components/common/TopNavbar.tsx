@@ -24,7 +24,6 @@ export default function TopNavbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   return (
     <>
       {/* Top Navbar */}
@@ -77,7 +76,7 @@ export default function TopNavbar() {
                     <span className='relative inline-block animate-slideDown group-hover:animate-slideUp'>
                       {item}
                     </span>
-                    <span className='absolute bottom-0 left-0 w-full h-[2px] bg-primary dark:bg-white transform origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100' />
+                    <span className='group-hover:scale-x-100 absolute bottom-0 left-0 w-full h-[2px] bg-primary dark:bg-white transform origin-left scale-x-0 transition-transform duration-300 ease-out' />
                   </Link>
                 ),
               )}

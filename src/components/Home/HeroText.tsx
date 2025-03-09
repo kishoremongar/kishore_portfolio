@@ -47,7 +47,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
   const [fontSize, setFontSize] = useState(minFontSize);
   const [scaleY, setScaleY] = useState(1);
   const [lineHeight, setLineHeight] = useState(1);
-
+  const [isAnimating, setIsAnimating] = useState(false);
   const chars = text.split('');
 
   const dist = (a: { x: number; y: number }, b: { x: number; y: number }) => {
@@ -71,8 +71,9 @@ const TextPressure: React.FC<TextPressureProps> = ({
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
     if (containerRef.current) {
-      const { left, top, width, height } =
-        containerRef.current.getBoundingClientRect();
+      const {
+        left, top, width, height,
+      } = containerRef.current.getBoundingClientRect();
       mouseRef.current.x = left + width / 2;
       mouseRef.current.y = top + height / 2;
       cursorRef.current.x = mouseRef.current.x;
@@ -88,15 +89,14 @@ const TextPressure: React.FC<TextPressureProps> = ({
   const setSize = () => {
     if (!containerRef.current || !titleRef.current) return;
 
-    const { width: containerW, height: containerH } =
-      containerRef.current.getBoundingClientRect();
+    const { width: containerW, height: containerH } = containerRef.current.getBoundingClientRect();
 
     // Add responsive breakpoint check
     const isMobile = window.innerWidth < 768;
 
     // Adjust base calculation for mobile
     let newFontSize = isMobile
-      ? containerW / (chars.length * 1) // More aggressive reduction for mobile
+      ? containerW / (chars.length * 1.2) // More aggressive reduction for mobile
       : containerW / (chars.length / 1.5);
 
     // Set minimum font size lower for mobile
@@ -126,6 +126,8 @@ const TextPressure: React.FC<TextPressureProps> = ({
   }, [scale, text]);
 
   useEffect(() => {
+    if (!isAnimating) return;
+
     let rafId: number;
     const animate = () => {
       mouseRef.current.x += (cursorRef.current.x - mouseRef.current.x) / 15;
@@ -170,11 +172,36 @@ const TextPressure: React.FC<TextPressureProps> = ({
 
     animate();
     return () => cancelAnimationFrame(rafId);
-  }, [width, weight, italic, alpha, chars.length]);
+  }, [width, weight, italic, alpha, chars.length, isAnimating]);
+
+  // Modify the useEffect for mouse events
+  useEffect(() => {
+    const startAnimation = () => setIsAnimating(true);
+
+    // Start animation only after first user interaction
+    window.addEventListener('mousemove', startAnimation, { once: true });
+    window.addEventListener('touchmove', startAnimation, { once: true });
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isAnimating) return;
+      cursorRef.current.x = e.clientX;
+      cursorRef.current.y = e.clientY;
+    };
+
+    // Add the mouse move handler
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+
+    // Rest of your existing mouse/touch event handlers...
+  }, [isAnimating]);
 
   return (
     <div ref={containerRef} className='relative w-full h-full bg-transparent'>
-      <style>{`
+      <style>
+        {`
         @font-face {
           font-family: '${fontFamily}';
           src: url('${fontUrl}');
@@ -194,7 +221,8 @@ const TextPressure: React.FC<TextPressureProps> = ({
           -webkit-text-stroke-width: ${strokeWidth}px;
           -webkit-text-stroke-color: ${strokeColor};
         }
-      `}</style>
+      `}
+      </style>
 
       <h1
         ref={titleRef}
@@ -203,7 +231,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
         } ${stroke ? 'stroke' : ''} uppercase text-center`}
         style={{
           fontFamily,
-          fontSize: fontSize,
+          fontSize,
           lineHeight,
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center top',

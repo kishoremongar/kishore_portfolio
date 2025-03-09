@@ -1,5 +1,6 @@
 'use client';
 
+import Footer from '@/components/common/Footer';
 import TopNavbar from '@/components/common/TopNavbar';
 
 import Contact from './_contact/Contact';
@@ -10,15 +11,14 @@ import TechStacks from './_techStacks/TechStacks';
 
 export default function Home() {
   return (
-    <main className='min-h-screen w-full bg-white dark:bg-primary'>
+    <main className='min-h-screen w-full flex flex-col gap-y-20 md:gap-y-0 bg-lightModeBackground dark:bg-primary'>
       <TopNavbar />
       <MainLandingHero />
-      <div className='w-full max-w-7xl sm:w-[85%] md:w-[70%] mx-auto px-10 flex flex-col gap-y-4 mt-4 md:px-16'>
-        <TechStacks />
-        <ProjectsSection />
-        <Experience />
-        <Contact />
-      </div>
+      <TechStacks />
+      <ProjectsSection />
+      <Experience />
+      <Contact />
+      <Footer />
     </main>
   );
 }

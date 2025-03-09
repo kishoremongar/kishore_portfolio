@@ -14,14 +14,146 @@
   }
 }
 
-body {
+/* body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
+
+/* Scrollbar styling start */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1c324a;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9392a4;
+}
+/* Scrollbar styling end */
+/* styles for windmill start */
+.windmill {
+  height: 0;
+  width: 1.25em;
+  border-bottom: 2.37em solid #041524;
+  border-left: 0.15em solid transparent;
+  border-right: 0.15em solid transparent;
+  position: absolute;
+  font-size: 8rem;
+  left: 45%;
+  top: 70%;
+  transform: translate(-45%, -70%);
+}
+.windmill:after {
+  position: absolute;
+  content: '';
+  background-color: #041524;
+  height: 0.62em;
+  width: 1.25em;
+  bottom: -0.06em;
+  border-radius: 1.25em 1.25em 0 0;
+}
+.windmill:before {
+  content: '';
+  position: absolute;
+  width: 1.5em;
+  height: 0;
+  border-bottom: 0.37em solid #0b2231;
+  border-left: 0.06em solid transparent;
+  border-right: 0.06em solid transparent;
+  position: absolute;
+  right: -0.2em;
+  top: 0.06em;
+}
+.nightsky_light {
+  height: 0.25em;
+  width: 0.25em;
+  background-color: #8daf76;
+  position: absolute;
+  top: 0.75em;
+  left: 0.5em;
+  border-radius: 50%;
+  box-shadow: 0 0 0.06em 0.12em rgba(141, 175, 118, 0.3),
+    0 0 0.06em 0.25em rgba(141, 175, 118, 0.2);
+}
+.nightsky_light:before {
+  content: '';
+  position: absolute;
+  background-color: #0f304f;
+  height: 0.5em;
+  width: 0.5em;
+  bottom: -1.25em;
+  left: -0.12em;
+  border-radius: 0.25em 0.25em 0 0;
+}
+.blades {
+  height: 3.75em;
+  width: 3.75em;
+  position: absolute;
+  bottom: -1.9em;
+  left: -1.25em;
+  animation: spin 5s infinite linear;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.blades:before {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 0.5em;
+  background-color: #041524;
+  left: 1.62em;
+}
+.blades:after {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 0.5em;
+  background-color: #041524;
+  left: 1.62em;
+  transform: rotate(90deg);
+}
+
+/* @media screen and (min-width: 500px) {
+  .container {
+    font-size: 3em;
+  }
+} */
+
+@media screen and (max-width: 650px) {
+  .windmill {
+    font-size: 4rem;
+  }
+}
+
+/* styles for windmill end */
+/* stepper timeline start */
+
+.timeline_layout:before {
+  content: '';
+  position: absolute;
+  top: 3%;
+  bottom: 0;
+  width: 10px;
+  left: 2%;
+  height: 100%;
+}
+
+/* stepper timeline end */

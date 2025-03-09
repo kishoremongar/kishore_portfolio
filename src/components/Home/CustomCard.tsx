@@ -1,7 +1,5 @@
-'use client';
-
 import { useTheme } from 'next-themes';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 interface Position {
   x: number;
@@ -22,7 +20,13 @@ const CustomCard: React.FC<SpotlightCardProps> = ({
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState<number>(0);
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme(); // `resolvedTheme` gives the actual theme applied after hydration
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensures that theme is set only after client-side hydration
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleMouseMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
     if (!divRef.current || isFocused) return;
@@ -49,6 +53,8 @@ const CustomCard: React.FC<SpotlightCardProps> = ({
     setOpacity(0);
   };
 
+  if (!isMounted) return null; // Avoid rendering until hydration is complete
+
   return (
     <div
       ref={divRef}
@@ -58,7 +64,7 @@ const CustomCard: React.FC<SpotlightCardProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`relative rounded-3xl border ${
-        theme === 'dark'
+        resolvedTheme === 'dark'
           ? 'border-neutral-800 bg-neutral-900'
           : 'border-neutral-200 bg-gray-100 hover:bg-white'
       } p-8 overflow-hidden ${className}`}
@@ -70,7 +76,7 @@ const CustomCard: React.FC<SpotlightCardProps> = ({
           background: `radial-gradient(circle at ${position.x}px ${
             position.y
           }px, ${
-            theme === 'dark' ? spotlightColor : 'rgba(0, 0, 0, 0.1)'
+            resolvedTheme === 'dark' ? spotlightColor : 'rgba(0, 0, 0, 0.1)'
           }, transparent 80%)`,
         }}
       />

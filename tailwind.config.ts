@@ -12,7 +12,11 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         primary: '#0a0a0c',
+        secondary: '#4f4f5f',
         white: '#fafafa',
+        lightModeBackground: '#f7f8fa',
+        textLightGray: '#9392a4',
+        neonGreen: '#b5ff6d',
       },
       keyframes: {
         slideUp: {
@@ -41,11 +45,20 @@ const config: Config = {
             transform: 'translateY(0)',
           },
         },
+        shine: {
+          '0%': { 'background-position': '100%' },
+          '100%': { 'background-position': '-100%' },
+        },
       },
       animation: {
         slideUp: 'slideUp 0.5s ease-in-out',
         drawBorder: 'drawBorder 0.3s ease-out forwards',
         fadeSlideUp: 'fadeSlideUp 0.6s ease-out',
+        shine: 'shine 5s linear infinite',
+      },
+      fontFamily: {
+        cormorant: ['Cormorant Upright', 'serif'],
+        noto: ['Noto Sans', 'sans-serif'],
       },
     },
   },

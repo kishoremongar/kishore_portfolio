@@ -1,21 +1,21 @@
 export default {
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   transform: {
-    "^.+\\.(t|j)sx?$": [
-      "@swc/jest",
+    '^.+\\.(t|j)sx?$': [
+      '@swc/jest',
       {
         jsc: {
           parser: {
-            syntax: "typescript",
+            syntax: 'typescript',
             tsx: true,
           },
           transform: {
             react: {
-              runtime: "automatic",
+              runtime: 'automatic',
             },
           },
         },
@@ -23,13 +23,13 @@ export default {
     ],
   },
   testMatch: [
-    "<rootDir>/__tests__/**/*.[jt]s?(x)",
-    "<rootDir>/__tests__/?(*.)+(spec|test).[jt]s?(x)",
+    '<rootDir>/__tests__/**/*.[jt]s?(x)',
+    '<rootDir>/__tests__/?(*.)+(spec|test).[jt]s?(x)',
   ],
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
   collectCoverageFrom: [
-    "src/**/*.{js,jsx,ts,tsx}",
-    "!src/**/*.d.ts",
-    "!src/**/_*.{js,jsx,ts,tsx}",
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/_*.{js,jsx,ts,tsx}',
   ],
 };
