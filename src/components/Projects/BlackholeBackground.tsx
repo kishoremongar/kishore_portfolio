@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 
 function BlackholeBackground() {
   const [isInView, setIsInView] = useState(false);
@@ -21,7 +21,7 @@ function BlackholeBackground() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleVideoEnded = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+  const handleVideoEnded = (e: SyntheticEvent<HTMLVideoElement>) => {
     const video = e.target as HTMLVideoElement;
     video.currentTime = 0;
     video.play();

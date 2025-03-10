@@ -20,7 +20,7 @@ interface TextPressureProps {
   minFontSize?: number;
 }
 
-const TextPressure: React.FC<TextPressureProps> = ({
+export default function TextPressure({
   text = 'Compressa',
   fontFamily = 'Compressa VF',
   fontUrl = 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2',
@@ -36,7 +36,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
   strokeWidth = 2,
   className = '',
   minFontSize = 24,
-}) => {
+}: Readonly<TextPressureProps>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const spansRef = useRef<(HTMLSpanElement | null)[]>([]);
@@ -72,9 +72,12 @@ const TextPressure: React.FC<TextPressureProps> = ({
 
     if (containerRef.current) {
       const {
-        left, top, width, height,
+        left,
+        top,
+        width: containerRefWidth,
+        height,
       } = containerRef.current.getBoundingClientRect();
-      mouseRef.current.x = left + width / 2;
+      mouseRef.current.x = left + containerRefWidth / 2;
       mouseRef.current.y = top + height / 2;
       cursorRef.current.x = mouseRef.current.x;
       cursorRef.current.y = mouseRef.current.y;
@@ -123,6 +126,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
     setSize();
     window.addEventListener('resize', setSize);
     return () => window.removeEventListener('resize', setSize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scale, text]);
 
   useEffect(() => {
@@ -162,8 +166,10 @@ const TextPressure: React.FC<TextPressureProps> = ({
           const italVal = italic ? getAttr(d, 0, 1).toFixed(2) : '0';
           const alphaVal = alpha ? getAttr(d, 0, 1).toFixed(2) : '1';
 
-          span.style.opacity = alphaVal;
-          span.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+          const spanElement = span;
+
+          spanElement.style.opacity = alphaVal;
+          spanElement.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
         });
       }
 
@@ -171,6 +177,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
     };
 
     animate();
+    // eslint-disable-next-line consistent-return
     return () => cancelAnimationFrame(rafId);
   }, [width, weight, italic, alpha, chars.length, isAnimating]);
 
@@ -240,21 +247,24 @@ const TextPressure: React.FC<TextPressureProps> = ({
           color: stroke ? undefined : textColor,
         }}
       >
-        {chars.map((char, i) => (
-          <span
-            key={i}
-            ref={(el: HTMLSpanElement | null) => {
-              spansRef.current[i] = el;
-            }}
-            data-char={char}
-            className='inline-block'
-          >
-            {char}
-          </span>
-        ))}
+        {chars.map((char, i) => {
+          const randomX = Math.random() * 100;
+          const randomY = Math.random() * 100;
+          const key = `hero-${i}-${randomX.toFixed(2)}-${randomY.toFixed(2)}`;
+          return (
+            <span
+              key={key}
+              ref={(el: HTMLSpanElement | null) => {
+                spansRef.current[i] = el;
+              }}
+              data-char={char}
+              className='inline-block'
+            >
+              {char}
+            </span>
+          );
+        })}
       </h1>
     </div>
   );
-};
-
-export default TextPressure;
+}

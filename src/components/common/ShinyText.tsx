@@ -7,12 +7,12 @@ interface ShinyTextProps {
   className?: string;
 }
 
-const ShinyText: React.FC<ShinyTextProps> = ({
+export default function ShinyText({
   text,
   disabled = false,
   speed = 5,
   className = '',
-}) => {
+}: Readonly<ShinyTextProps>) {
   const animationDuration = `${speed}s`;
 
   return (
@@ -31,6 +31,4 @@ const ShinyText: React.FC<ShinyTextProps> = ({
       {text}
     </div>
   );
-};
-
-export default ShinyText;
+}

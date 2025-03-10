@@ -17,13 +17,13 @@ interface SquaresProps {
   hoverFillColor?: CanvasStrokeStyle;
 }
 
-const BackgroundGrid: React.FC<SquaresProps> = ({
+export default function BackgroundGrid({
   direction = 'right',
   speed = 0.5,
   borderColor = '#999',
   squareSize = 40,
   hoverFillColor = '#222',
-}) => {
+}: Readonly<SquaresProps>) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const numSquaresX = useRef<number>(0);
@@ -31,12 +31,10 @@ const BackgroundGrid: React.FC<SquaresProps> = ({
   const gridOffset = useRef<GridOffset>({ x: 0, y: 0 });
   const hoveredSquareRef = useRef<GridOffset | null>(null);
   // Add state for random filled squares
-  const filledSquares = useRef<
-    { x: number; y: number; opacity: number }[]
-  >([]);
-  const shootingStars = useRef<
-    { x: number; y: number; length: number; speed: number }[]
-  >([]);
+  // const filledSquares = useRef<{ x: number; y: number; opacity: number }[]>([]);
+  // const shootingStars = useRef<
+  //   { x: number; y: number; length: number; speed: number }[]
+  // >([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -155,6 +153,7 @@ const BackgroundGrid: React.FC<SquaresProps> = ({
     canvas.addEventListener('mouseleave', handleMouseLeave);
     requestRef.current = requestAnimationFrame(updateAnimation);
 
+    // eslint-disable-next-line consistent-return
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
@@ -163,12 +162,5 @@ const BackgroundGrid: React.FC<SquaresProps> = ({
     };
   }, [direction, speed, borderColor, hoverFillColor, squareSize]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className='w-full h-full border-none block'
-    />
-  );
-};
-
-export default BackgroundGrid;
+  return <canvas ref={canvasRef} className='w-full h-full border-none block' />;
+}

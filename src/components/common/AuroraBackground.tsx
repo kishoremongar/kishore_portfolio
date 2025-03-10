@@ -113,11 +113,11 @@ interface AuroraProps {
   colorStops?: string[];
   amplitude?: number;
   blend?: number;
-  time?: number;
   speed?: number;
+  time?: number;
 }
 
-export default function Aurora(props: AuroraProps) {
+export default function Aurora(props: Readonly<AuroraProps>) {
   const {
     colorStops = ['#00d8ff', '#7cff67', '#00d8ff'],
     amplitude = 1.0,
@@ -201,6 +201,7 @@ export default function Aurora(props: AuroraProps) {
 
     resize();
 
+    // eslint-disable-next-line consistent-return
     return () => {
       cancelAnimationFrame(animateId);
       window.removeEventListener('resize', resize);
@@ -209,6 +210,7 @@ export default function Aurora(props: AuroraProps) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
 
   return (

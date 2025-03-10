@@ -7,20 +7,20 @@ interface Position {
 }
 
 interface SpotlightCardProps extends React.PropsWithChildren {
-  className?: string;
+  className: string;
   spotlightColor?: `rgba(${number}, ${number}, ${number}, ${number})`;
 }
 
-const CustomCard: React.FC<SpotlightCardProps> = ({
+export default function CustomCard({
   children,
   className = '',
   spotlightColor = 'rgba(255, 255, 255, 0.25)',
-}) => {
+}: Readonly<SpotlightCardProps>) {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState<number>(0);
-  const { theme, resolvedTheme } = useTheme(); // `resolvedTheme` gives the actual theme applied after hydration
+  const { resolvedTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   // Ensures that theme is set only after client-side hydration
@@ -83,6 +83,4 @@ const CustomCard: React.FC<SpotlightCardProps> = ({
       {children}
     </div>
   );
-};
-
-export default CustomCard;
+}

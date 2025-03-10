@@ -9,7 +9,7 @@ interface SectionLabelProps {
 
 export default function SectionLabel({
   text,
-  textClassName,
+  textClassName = '',
 }: SectionLabelProps) {
   return (
     <div className='flex items-center gap-2'>

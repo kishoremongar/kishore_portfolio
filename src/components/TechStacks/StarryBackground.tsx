@@ -16,7 +16,7 @@ export default function StarryBackground() {
       ],
       easing: 'linear',
       loop: true,
-      delay: (el, i) => 50 * i,
+      delay: (_, i) => 50 * i,
     });
 
     // Shooting stars animation
@@ -24,7 +24,7 @@ export default function StarryBackground() {
       targets: '#shootingstars .wish',
       easing: 'linear',
       loop: true,
-      delay: (el, i) => 1000 * i,
+      delay: (_, i) => 1000 * i,
       opacity: [{ duration: 700, value: '1' }],
       translateX: 350,
       width: [{ value: '150px' }, { value: '0px' }],
@@ -40,31 +40,41 @@ export default function StarryBackground() {
   return (
     <div className='w-full h-full'>
       <svg id='sky' className='w-full h-full absolute'>
-        {[...Array(60)].map((_, i) => (
-          <circle
-            key={i}
-            cx={`${Math.random() * 100}%`}
-            cy={`${Math.random() * 100}%`}
-            r={Math.random() * 0.7 + 0.6}
-            fill='white'
-            className='star'
-          />
-        ))}
+        {[...Array(60)].map((_, i) => {
+          const randomX = Math.random() * 100;
+          const randomY = Math.random() * 100;
+          const key = `star-${i}-${randomX.toFixed(2)}-${randomY.toFixed(2)}`;
+          return (
+            <circle
+              key={key}
+              cx={`${Math.random() * 100}%`}
+              cy={`${Math.random() * 100}%`}
+              r={Math.random() * 0.7 + 0.6}
+              fill='white'
+              className='star'
+            />
+          );
+        })}
       </svg>
       <div
         id='shootingstars'
         className='w-full h-full absolute rotate-[135deg]'
       >
-        {[...Array(60)].map((_, i) => (
-          <div
-            key={i}
-            className='wish h-[2px] w-[100px] opacity-0 absolute bg-gradient-to-l from-white to-transparent drop-shadow-[0_0_6px_white]'
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+        {[...Array(60)].map((_, i) => {
+          const randomX = Math.random() * 100;
+          const randomY = Math.random() * 100;
+          const key = `wish-${i}-${randomX.toFixed(2)}-${randomY.toFixed(2)}`;
+          return (
+            <div
+              key={key}
+              className='wish h-[2px] w-[100px] opacity-0 absolute bg-gradient-to-l from-white to-transparent drop-shadow-[0_0_6px_white]'
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );

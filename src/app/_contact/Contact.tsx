@@ -17,7 +17,7 @@ export default function Contact() {
   return (
     <div
       id='contact'
-      className='min-h-screen w-full max-w-[1536px] flex items-center justify-center text-primary dark:text-white'
+      className='min-h-screen w-full flex items-center justify-center text-primary dark:text-white'
     >
       <div className='flex w-full gap-x-12 justify-center'>
         <div className='w-full lg:w-1/4 p-6 flex flex-col gap-y-4'>

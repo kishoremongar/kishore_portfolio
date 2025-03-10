@@ -20,24 +20,21 @@ export default [
   ...compat.extends('eslint-config-next'),
   ...compat.extends('airbnb'),
   {
-    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
+    files: ['src/**/*.{js,mjs,cjs,jsx,ts,tsx}'],
     ignores: [
-      '**/.*', // ignore dot files
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/.git/**',
-      '.next/**',
-      '**/.next',
-      '**/.next/**',
-      '**/out/**',
-      'next.config.mjs',
-      'next-env.d.ts',
-      'postcss.config.js',
-      'tailwind.config.js',
-      'package.json',
-      'package-lock.json',
-      'public/**',
-      '*.config.{js,mjs}',
+      '**/.*', // Ignore dotfiles
+      '**/node_modules/**/*', // Ignore node_modules
+      '**/dist/**/*', // Ignore dist folder
+      '**/.git/**/*', // Ignore git-related files
+      '.next/**/*', // Ignore .next folder
+      '**/out/**/*', // Ignore out folder
+      'next.config.mjs', // Ignore next config
+      'next-env.d.ts', // Ignore next-env file
+      'postcss.config.js', // Ignore postcss config
+      'tailwind.config.js', // Ignore tailwind config
+      'package.json', // Ignore package json
+      'package-lock.json', // Ignore package lock file
+      '**/*.config.{js,mjs,ts}', // Ignore config files
     ],
     languageOptions: {
       parser: typescriptParser,
@@ -49,8 +46,7 @@ export default [
         ...globals.es2021,
       },
       parserOptions: {
-        project: './tsconfig.json',
-        jsx: true,
+        project: './tsconfig.eslint.json',
       },
     },
     plugins: {
@@ -101,6 +97,7 @@ export default [
           },
         },
       ],
+      'react/require-default-props': 'off',
     },
   },
 ];

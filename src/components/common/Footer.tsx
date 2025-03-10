@@ -2,11 +2,10 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import { FC } from 'react';
 
 import Aurora from './AuroraBackground';
 
-const Footer: FC = () => {
+export default function Footer() {
   const currentYear: number = new Date().getFullYear();
   const { theme } = useTheme();
   const socialLinks = [
@@ -53,7 +52,7 @@ const Footer: FC = () => {
               className='hover:text-gray-400 transition flex items-center gap-x-2'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: item?.id * 0.2 }}
+              transition={{ duration: 1, delay: item.id * 0.2 }}
             >
               <Link href={item?.pathname} target='_blank'>
                 <Image
@@ -71,7 +70,7 @@ const Footer: FC = () => {
           {['Tech Stack', 'Projects', 'Experience', 'Contact'].map(
             (item, idx) => (
               <motion.div
-                key={idx}
+                key={item}
                 className='hover:text-gray-400 transition flex items-center gap-x-2'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -103,6 +102,4 @@ const Footer: FC = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

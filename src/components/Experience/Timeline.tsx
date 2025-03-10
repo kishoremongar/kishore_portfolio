@@ -10,13 +10,14 @@ interface WorkExperience {
   position: string;
   timePeriod: string;
   description: string;
+  id: number;
 }
 
 interface TimelineProps {
   experiences: WorkExperience[];
 }
 
-function Timeline({ experiences }: TimelineProps) {
+function Timeline({ experiences }: Readonly<TimelineProps>) {
   return (
     <div className='w-full flex flex-col gap-y-4 max-w-screen-lg mx-auto py-16'>
       <SectionLabel
@@ -24,9 +25,9 @@ function Timeline({ experiences }: TimelineProps) {
         textClassName='!text-2xl font-semibold text-center'
       />
       <div className='relative z-10 timeline_layout before:dark:bg-[#041524] before:bg-textLightGray'>
-        {experiences.map((exp, index) => (
+        {experiences.map((exp) => (
           <motion.div
-            key={index}
+            key={exp?.id}
             className='timeline-item flex items-center py-8'
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }} // Animate opacity when in view
@@ -57,6 +58,7 @@ function Timeline({ experiences }: TimelineProps) {
 function WorkExperienceTimeline() {
   const workExperiences: WorkExperience[] = [
     {
+      id: 1,
       company: 'Aptagrim Limited',
       position: 'Front-end Developer',
       timePeriod: 'Aug 2022 - Present',
@@ -64,6 +66,7 @@ function WorkExperienceTimeline() {
         'Worked on the development of psyHire(Product) and actively supported various projects.',
     },
     {
+      id: 2,
       company: 'Amazon',
       position: 'SDS Associate',
       timePeriod: 'Oct 2021 - Jan 2022',

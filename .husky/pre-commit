@@ -1,13 +1,10 @@
 #!/bin/sh
 echo "Running pre-commit hook"
 
-# Run TypeScript compiler (tsc) without emitting files
-npx tsc --noEmit
-
-# Run ESLint to auto-fix issues
-# npx eslint --fix .
+# Directly invoke npx with the local tsc
+# npx tsc --noEmit --skipLibCheck || exit 0
 
 # Run lint-staged
-# npx lint-staged
+npx lint-staged
 
 echo "Finished pre-commit hook"

@@ -1,5 +1,5 @@
 import { useTransition, a } from '@react-spring/web';
-import React, {
+import {
   useState, useEffect, useMemo, useRef,
 } from 'react';
 
@@ -20,7 +20,7 @@ interface MasonryProps {
   data: MasonryItem[];
 }
 
-function GridBox({ data }: MasonryProps) {
+function GridBox({ data }: Readonly<MasonryProps>) {
   const [columns, setColumns] = useState<number>(2);
 
   useEffect(() => {
@@ -56,12 +56,12 @@ function GridBox({ data }: MasonryProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const [heights, gridItems] = useMemo<[number[], GridItem[]]>(() => {
-    const heights = new Array(columns).fill(0);
-    const gridItems = data.map((child) => {
-      const column = heights.indexOf(Math.min(...heights));
+  const [columnHeights, gridItems] = useMemo<[number[], GridItem[]]>(() => {
+    const gridHeights = new Array(columns).fill(0);
+    const items = data.map((child) => {
+      const column = gridHeights.indexOf(Math.min(...gridHeights));
       const x = (width / columns) * column;
-      const y = (heights[column] += child.height / 2) - child.height / 2;
+      const y = (gridHeights[column] += child.height / 2) - child.height / 2;
       return {
         ...child,
         x,
@@ -70,7 +70,7 @@ function GridBox({ data }: MasonryProps) {
         height: child.height / 2,
       };
     });
-    return [heights, gridItems];
+    return [gridHeights, items];
   }, [columns, data, width]);
 
   const transitions = useTransition<
@@ -79,19 +79,30 @@ function GridBox({ data }: MasonryProps) {
   >(gridItems, {
     keys: (item) => item.id,
     from: ({
-      x, y, width, height,
+      x, y, width: itemWidth, height,
     }) => ({
-      x, y, width, height, opacity: 0,
+      x,
+      y,
+      width: itemWidth,
+      height,
+      opacity: 0,
     }),
     enter: ({
-      x, y, width, height,
+      x, y, width: itemWidth, height,
     }) => ({
-      x, y, width, height, opacity: 1,
+      x,
+      y,
+      width: itemWidth,
+      height,
+      opacity: 1,
     }),
     update: ({
-      x, y, width, height,
+      x, y, width: itemWidth, height,
     }) => ({
-      x, y, width, height,
+      x,
+      y,
+      width: itemWidth,
+      height,
     }),
     leave: { height: 0, opacity: 0 },
     config: { mass: 5, tension: 500, friction: 100 },
@@ -102,7 +113,7 @@ function GridBox({ data }: MasonryProps) {
     <div
       ref={ref}
       className='relative w-full h-full'
-      style={{ height: Math.max(...heights) }}
+      style={{ height: Math.max(...columnHeights) }}
     >
       {transitions((style, item) => (
         <a.div

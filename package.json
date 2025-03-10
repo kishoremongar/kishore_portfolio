@@ -6,12 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix \"src/**/*.{ts,js,tsx,jsx}\"",
+    "lint": "eslint --fix \"src/**/*.{ts,js,tsx,jsx}\" --config .eslintrc.json",
     "prepare": "husky",
     "test": "jest --coverage --passWithNoTests",
     "test:watch": "jest --watch",
     "commitlint": "commitlint --edit",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -35,7 +35,7 @@
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
       "npm run lint",
-      "npm test"
+      "npm run test"
     ]
   },
   "devDependencies": {
@@ -64,7 +64,8 @@
     "postcss": "^8",
     "redux-mock-store": "^1.5.5",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "tsc-files": "^1.1.4",
+    "typescript": "^5.0.4"
   },
   "type": "module"
 }

@@ -1,25 +1,23 @@
+/* eslint-disable react/no-unknown-property */
+
 'use client';
 
 import { OrbitControls, Stars } from '@react-three/drei';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
 // No need for a custom TargetGeometry interface; use THREE.BufferGeometry directly
-interface ParticleSystemProps {
-  mouse: [number, number];
-}
+// interface ParticleSystemProps {
+//   mouse: [number, number];
+// }
 
-interface ParticleSystemProps {
-  mouse: [number, number];
-}
-
-function ParticleSystem({ mouse }: ParticleSystemProps) {
+function ParticleSystem() {
   const particlesRef = useRef<THREE.Points | null>(null);
   const [bufferGeometry, setBufferGeometry] = useState<THREE.BufferGeometry | null>(null);
-  const [headPosition, setHeadPosition] = useState<THREE.Vector3 | null>(null);
-  const { camera } = useThree();
+  // const [headPosition, setHeadPosition] = useState<THREE.Vector3 | null>(null);
+  // const { camera } = useThree();
 
   useEffect(() => {
     const loader = new OBJLoader();
@@ -39,14 +37,17 @@ function ParticleSystem({ mouse }: ParticleSystemProps) {
             );
             setBufferGeometry(particleGeometry);
 
-            const bbox = new THREE.Box3().setFromObject(object);
-            const center = bbox.getCenter(new THREE.Vector3());
-            setHeadPosition(center);
+            // const bbox = new THREE.Box3().setFromObject(object);
+            // const center = bbox.getCenter(new THREE.Vector3());
+            // setHeadPosition(center);
           }
         });
       },
       undefined,
-      (error) => console.error('OBJ Load Error:', error),
+      (error) => {
+        // eslint-disable-next-line no-console
+        console.error('OBJ Load Error:', error);
+      },
     );
   }, []);
 
@@ -86,7 +87,7 @@ export default function ParticleHead() {
         className='w-full h-full'
       >
         <Stars />
-        <ParticleSystem mouse={mouse.current} />
+        <ParticleSystem />
         <OrbitControls enableZoom={false} />
       </Canvas>
     </div>

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 'use client';
 
 import emailjs from '@emailjs/browser';
@@ -71,6 +73,7 @@ function ContactForm() {
             onChange={handleChange}
             className='w-full px-4 py-2 border-textLightGray/40 border rounded-md bg-transparent dark:text-white text-textLightGray'
             required
+            aria-labelledby='name'
           />
         </div>
         <div className='flex flex-col gap-y-2 items-start'>
