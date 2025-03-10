@@ -99,6 +99,7 @@ export default function MainLandingHero() {
                   target='_blank'
                   className='text-blue-500 hover:text-blue-400 flex items-center gap-2'
                   title='LinkedIn'
+                  rel='noopener noreferrer'
                 >
                   <Image
                     src='/icons/linkedin.svg'
@@ -112,6 +113,7 @@ export default function MainLandingHero() {
                   target='_blank'
                   className='text-blue-500 hover:text-blue-400 flex items-center gap-2'
                   title='GitHub'
+                  rel='noopener noreferrer'
                 >
                   <Image
                     src='/icons/github.svg'
@@ -125,6 +127,7 @@ export default function MainLandingHero() {
                   target='_blank'
                   className='text-blue-500 hover:text-blue-400 flex items-center gap-2'
                   title='Hashnode'
+                  rel='noopener noreferrer'
                 >
                   <Image
                     src='/icons/hashnode.svg'

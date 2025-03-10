@@ -9,12 +9,15 @@ import {
   EnvelopeIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 export default function TopNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [currentSection, setCurrentSection] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +27,35 @@ export default function TopNavbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['tech_stack', 'projects', 'experience', 'contact'];
+      const isInMainHero = window.scrollY < window.innerHeight / 2;
+
+      if (isInMainHero) {
+        setCurrentSection('');
+        return;
+      }
+
+      sections.some((section) => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setCurrentSection(section);
+            return true;
+          }
+        }
+        return false;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check on mount
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
       {/* Top Navbar */}
@@ -63,22 +95,39 @@ export default function TopNavbar() {
             </Link>
             <div className='hidden md:flex items-center space-x-8'>
               {['Tech Stack', 'Projects', 'Experience', 'Contact'].map(
-                (item) => (
-                  <Link
-                    key={item}
-                    href={
-                      item === 'Home'
-                        ? '/'
-                        : `/#${item.toLowerCase().replace(' ', '_')}`
-                    }
-                    className='group relative overflow-hidden inline-block hover:text-primary/75 dark:hover:text-gray-300 transition-colors'
-                  >
-                    <span className='relative inline-block animate-slideDown group-hover:animate-slideUp'>
-                      {item}
-                    </span>
-                    <span className='group-hover:scale-x-100 absolute bottom-0 left-0 w-full h-[2px] bg-primary dark:bg-white transform origin-left scale-x-0 transition-transform duration-300 ease-out' />
-                  </Link>
-                ),
+                (item) => {
+                  const sectionId = item.toLowerCase().replace(' ', '_');
+                  const isSelected = currentSection === sectionId && currentSection !== '';
+
+                  return (
+                    <Link
+                      key={item}
+                      href={`/#${sectionId}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const element = document.getElementById(sectionId);
+                        element?.scrollIntoView({ behavior: 'smooth' });
+                        router.push('/', { scroll: false });
+                      }}
+                      className={`relative overflow-hidden inline-block transition-colors
+                        ${
+                          isSelected
+                            ? 'text-primary dark:text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-current'
+                            : 'hover:text-primary/75 dark:hover:text-gray-300 group'
+                        }`}
+                    >
+                      {!isSelected && (
+                        <>
+                          <span className='relative inline-block animate-slideDown group-hover:animate-slideUp'>
+                            {item}
+                          </span>
+                          <span className='group-hover:scale-x-100 absolute bottom-0 left-0 w-full h-[2px] bg-primary dark:bg-white transform origin-left scale-x-0 transition-transform duration-300 ease-out' />
+                        </>
+                      )}
+                      {isSelected && <span>{item}</span>}
+                    </Link>
+                  );
+                },
               )}
             </div>
             <button
@@ -94,6 +143,7 @@ export default function TopNavbar() {
           </div>
         </div>
       </nav>
+      {/* Bottom Mobile Navigation */}
       {/* Bottom Mobile Navigation */}
       <nav
         style={{
@@ -111,16 +161,38 @@ export default function TopNavbar() {
             { icon: FolderIcon, label: 'Projects', href: '/#projects' },
             { icon: BriefcaseIcon, label: 'Experience', href: '/#experience' },
             { icon: EnvelopeIcon, label: 'Contact', href: '/#contact' },
-          ].map(({ icon: Icon, label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className='flex flex-col items-center gap-1 text-gray-200 hover:text-blue-400 transition-colors duration-300'
-            >
-              <Icon className='w-6 h-6' />
-              <span className='text-xs font-medium'>{label}</span>
-            </Link>
-          ))}
+          ].map(({ icon: Icon, label, href }) => {
+            const sectionId = label.toLowerCase().replace(' ', '_');
+            const isSelected = currentSection === sectionId && currentSection !== '';
+
+            return (
+              <Link
+                key={label}
+                href={href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById(sectionId);
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                  router.push('/', { scroll: false });
+                }}
+                className={`flex flex-col items-center gap-1 transition-colors duration-300
+            ${
+              isSelected ? 'text-blue-400' : 'text-gray-200 hover:text-blue-400'
+            }`}
+              >
+                <Icon
+                  className={`w-6 h-6 ${isSelected ? 'text-blue-400' : ''}`}
+                />
+                <span
+                  className={`text-xs font-medium ${
+                    isSelected ? 'text-blue-400' : ''
+                  }`}
+                >
+                  {label}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </>

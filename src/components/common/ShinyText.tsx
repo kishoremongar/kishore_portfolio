@@ -14,7 +14,6 @@ export default function ShinyText({
   className = '',
 }: Readonly<ShinyTextProps>) {
   const animationDuration = `${speed}s`;
-
   return (
     <div
       className={`text-[#b5b5b5a4] bg-clip-text inline-block ${

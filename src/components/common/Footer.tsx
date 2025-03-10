@@ -54,7 +54,11 @@ export default function Footer() {
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: item.id * 0.2 }}
             >
-              <Link href={item?.pathname} target='_blank'>
+              <Link
+                href={item?.pathname}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
                 <Image
                   src={item?.icon}
                   alt={`${item?.title} Icon`}

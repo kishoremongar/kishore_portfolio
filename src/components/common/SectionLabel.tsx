@@ -10,10 +10,16 @@ interface SectionLabelProps {
 export default function SectionLabel({
   text,
   textClassName = '',
+  imageSize = 16,
 }: SectionLabelProps) {
   return (
     <div className='flex items-center gap-2'>
-      <Image src='/icons/star.svg' alt='Section Icon' width={16} height={16} />
+      <Image
+        src='/icons/star.svg'
+        alt='Section Icon'
+        width={imageSize}
+        height={imageSize}
+      />
       <ShinyText
         text={text}
         className={`${textClassName} text-sm uppercase tracking-wider font-medium`}
