@@ -37,7 +37,9 @@ export default function RootLayout({
       <body
         className={`${notoSans.variable} ${cormorant.variable} antialiased`}
       >
-        <ThemeProvider attribute='class'>{children}</ThemeProvider>
+        <ThemeProvider attribute='class' defaultTheme='dark'>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
