@@ -35,8 +35,8 @@ function Timeline({ experiences }: Readonly<TimelineProps>) {
             transition={{ duration: 1, ease: 'easeInOut' }}
             viewport={{ once: true }} // Trigger animation only once when it enters the viewport
           >
-            <div className='relative flex justify-center items-center w-10 h-10 bg-textLightGray dark:bg-[#0b2231] rounded-full text-white'>
-              <BriefcaseIcon className='w-6 h-6' />
+            <div className='relative flex justify-center items-center w-14 h-6 md:size-10 bg-textLightGray dark:bg-[#0b2231] rounded-full text-white'>
+              <BriefcaseIcon className='size-4 md:size-6' />
             </div>
             <div className='ml-6 md:ml-12 flex flex-col md:text-left'>
               <h3 className='font-semibold text-xl'>{exp.company}</h3>
@@ -44,7 +44,7 @@ function Timeline({ experiences }: Readonly<TimelineProps>) {
               <p className='text-sm dark:text-textLightGray'>
                 {exp.timePeriod}
               </p>
-              <p className='text-md dark:text-secondary mt-2 w-2/3'>
+              <p className='text-md dark:text-secondary mt-2 w-full'>
                 {exp.description}
               </p>
             </div>

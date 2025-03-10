@@ -106,7 +106,7 @@ function ContactForm() {
         </div>
         <button
           type='submit'
-          className='self-center border border-textLightGray/40 rounded-3xl bg-transparent dark:text-white text-primary hover:text-white hover:bg-primary dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10 px-4 py-2 text-lg font-medium transition-colors duration-300 gap-2'
+          className='self-center border border-textLightGray/40 rounded-3xl bg-transparent dark:text-white text-primary hover:text-white hover:bg-primary dark:hover:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10 px-4 py-2 text-sm md:text-lg font-medium transition-colors duration-300 gap-2'
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Sending love...' : 'Send Message'}

@@ -125,7 +125,7 @@ export default function TechStacks() {
         <div className='absolute inset-0'>
           <StarryBackground />
         </div>
-        <div className='relative z-10 h-full flex items-center w-full max-w-7xl sm:w-[85%] md:w-[70%] mx-auto'>
+        <div className='relative z-10 h-full flex items-center w-full max-w-7xl sm:w-[85%] md:w-[65%] mx-auto'>
           <div className='mx-auto px-10 md:px-0 flex md:items-start flex-col sm:flex-row'>
             {/* Left Section: Title */}
             <motion.div

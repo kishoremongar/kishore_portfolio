@@ -30,7 +30,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className='w-full mt-10 relative h-full'>
+    <footer className='w-full md:mt-10 relative h-full'>
       {/* Aurora Background - Full Width */}
       <Aurora
         colorStops={
